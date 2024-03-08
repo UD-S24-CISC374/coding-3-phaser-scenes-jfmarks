@@ -1,122 +1,32 @@
 import Phaser from "phaser";
 import FpsText from "../objects/fpsText";
 
-export default class MainScene extends Phaser.Scene {
+export default class riverScene extends Phaser.Scene {
     fpsText: FpsText;
     private player?: Phaser.Physics.Arcade.Sprite;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private bone?: Phaser.Physics.Arcade.Group;
-    private score: number = 0;
+    private score: number;
     private scoreText?: Phaser.GameObjects.Text;
-    private playerX: number = 200;
+    private playerX: number;
 
     constructor() {
-        super({ key: "MainScene" });
+        super({ key: "RiverScene" });
     }
     init(data: { score: number; playerX: number }) {
-        this.score = this.score == 0 ? 0 : data.score;
-        this.playerX = this.playerX == 200 ? 200 : data.playerX;
+        this.score = data.score;
+        this.playerX = data.playerX;
     }
     create() {
         let image = this.add.image(
             this.cameras.main.width / 2,
             this.cameras.main.height / 2,
-            "background"
+            "river"
         );
         let scaleX = this.cameras.main.width / image.width;
         let scaleY = this.cameras.main.height / image.height;
         let scale = Math.max(scaleX, scaleY);
         image.setScale(scale).setScrollFactor(0);
-        image.depth = 0;
-
-        this.anims.create({
-            key: "idle",
-            frames: this.anims.generateFrameNumbers("idle", {
-                start: 0,
-                end: 3,
-            }),
-            frameRate: 10,
-            repeat: -1,
-        });
-        this.anims.create({
-            key: "left",
-            frames: this.anims.generateFrameNumbers("walkLeft", {
-                start: 0,
-                end: 3,
-            }),
-            frameRate: 10,
-            repeat: -1,
-        });
-
-        this.anims.create({
-            key: "turn",
-            frames: [{ key: "walkDown", frame: 0 }],
-            frameRate: 20,
-        });
-        this.anims.create({
-            key: "right",
-            frames: this.anims.generateFrameNumbers("walkRight", {
-                start: 0,
-                end: 3,
-            }),
-            frameRate: 10,
-            repeat: -1,
-        });
-        this.anims.create({
-            key: "up",
-            frames: this.anims.generateFrameNumbers("walkUp", {
-                start: 0,
-                end: 3,
-            }),
-            frameRate: 10,
-            repeat: -1,
-        });
-        this.anims.create({
-            key: "down",
-            frames: this.anims.generateFrameNumbers("walkDown", {
-                start: 0,
-                end: 3,
-            }),
-            frameRate: 10,
-            repeat: -1,
-        });
-        this.anims.create({
-            key: "downRight",
-            frames: this.anims.generateFrameNumbers("walkDownRight", {
-                start: 0,
-                end: 3,
-            }),
-            frameRate: 10,
-            repeat: -1,
-        });
-        this.anims.create({
-            key: "downLeft",
-            frames: this.anims.generateFrameNumbers("walkDownLeft", {
-                start: 0,
-                end: 3,
-            }),
-            frameRate: 10,
-            repeat: -1,
-        });
-        this.anims.create({
-            key: "upRight",
-            frames: this.anims.generateFrameNumbers("walkUpRight", {
-                start: 0,
-                end: 3,
-            }),
-            frameRate: 10,
-            repeat: -1,
-        });
-        this.anims.create({
-            key: "upLeft",
-            frames: this.anims.generateFrameNumbers("walkUpLeft", {
-                start: 0,
-                end: 3,
-            }),
-            frameRate: 10,
-            repeat: -1,
-        });
-
         this.player = this.physics.add.sprite(
             this.playerX,
             this.cameras.main.height - 16,
@@ -126,7 +36,6 @@ export default class MainScene extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
 
         this.cursors = this.input.keyboard?.createCursorKeys();
-
         this.bone = this.physics.add.group({
             key: "bone",
             repeat: 11,
@@ -168,7 +77,6 @@ export default class MainScene extends Phaser.Scene {
         bone.disableBody(true, true);
         this.score += 10;
         this.scoreText?.setText("Score:" + this.score);
-        console.log("winner");
         return true;
     }
 
@@ -224,7 +132,7 @@ export default class MainScene extends Phaser.Scene {
         if (this.player?.body) {
             if (this.player.body.y <= 0) {
                 console.log("next scene");
-                this.scene.start("RiverScene", {
+                this.scene.start("TownScene", {
                     score: this.score,
                     playerX: this.player.x,
                 });

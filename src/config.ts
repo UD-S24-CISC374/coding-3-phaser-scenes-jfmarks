@@ -1,7 +1,9 @@
 import Phaser from "phaser";
 import MainScene from "./scenes/mainScene";
 import PreloadScene from "./scenes/preloadScene";
-import Scene2 from "./scenes/Scene2";
+import RiverScene from "./scenes/riverScene";
+import TownScene from "./scenes/townScene";
+import MeadowScene from "./scenes/meadowScene";
 
 const DEFAULT_WIDTH = 1280;
 const DEFAULT_HEIGHT = 720;
@@ -18,11 +20,11 @@ export const CONFIG = {
         width: DEFAULT_WIDTH,
         height: DEFAULT_HEIGHT,
     },
-    scene: [PreloadScene, MainScene, Scene2],
+    scene: [PreloadScene, MainScene, RiverScene, TownScene, MeadowScene],
     physics: {
         default: "arcade",
         arcade: {
-            debug: false,
+            debug: true,
             gravity: { y: 0 },
         },
     },
