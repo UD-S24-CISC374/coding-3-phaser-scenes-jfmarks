@@ -27,6 +27,7 @@ export default class TownScene extends Phaser.Scene {
         let scaleY = this.cameras.main.height / image.height;
         let scale = Math.max(scaleX, scaleY);
         image.setScale(scale).setScrollFactor(0);
+        this.add.image(this.cameras.main.width / 2, 32, "arrow");
         this.player = this.physics.add.sprite(
             this.playerX,
             this.cameras.main.height - 16,

@@ -11,6 +11,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("town", "assets/town.png"); // This image was created with the assistance of DALL·E 2
         this.load.image("meadow", "assets/meadow.png"); // This image was created with the assistance of DALL·E 2
         this.load.image("bone", "assets/bone.png"); // bone sprite is from Minecraft
+        this.load.image("arrow", "assets/arrow.png");
         this.load.spritesheet("idle", "assets/idle.png", {
             // dog sprite is from Enter the Gungeon https://enterthegungeon.com/
             frameWidth: 36,
